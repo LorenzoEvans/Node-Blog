@@ -2,16 +2,17 @@ const express = require("express")
 const helmet = require("helmet")
 const morganLog = require("morgan")
 const PORT = 4090
-const upperCaser = require('./middleware')
+const middleware = require('./middleware')
 const server = express()
 const userDB = require("./data/helpers/userDb")
 const postDB = require("./data/helpers/postDb")
 
+const upperCase = middleware.upperCaser
 server.use(
  express.json(),
  helmet(),
  morganLog('tiny'),
- upperCaser.upperCaser
+ // upperCaser.upperCaser
 )
 
 server.get('/api/users', (req, res) => {
@@ -43,8 +44,8 @@ server.get('/api/users/:id', (req, res) => {
  })
 })
 
-server.post('/api/users', (req, res) => {
- const { name } = req.params
+server.post('/api/users', upperCase, (req, res) => {
+ const { name } = req.body
  userDB.insert({ name })
  .then(({ name }) => {
   res
@@ -59,43 +60,58 @@ server.post('/api/users', (req, res) => {
 
 server.put('/api/users/:id', (req, res) => {
  userDB.update(user)
+ .then()
+ .catch()
 })
 
 server.delete('/api/users/:id', (req, res) => {
  userDB.remove(user)
+ .then()
+ .catch(() => {
+
+ })
 })
 
 // Posts endpoints 
-
 server.get('/api/posts', (req, res) => {
  postDB.get()
  .then()
- .catch()
+ .catch(() => {
+
+ })
 })
 
 server.get('/api/posts/:id', (req, res) => {
  const { id } = req.params
  postDB.get(id)
  .then()
- .catch()
+ .catch(() => {
+
+ })
 })
 
 server.post('/api/posts', (req, res) => {
  postDB.insert(post)
  .then()
- .catch()
+ .catch(() => {
+
+ })
 })
 
 server.put('/api/posts/:id', (req, res) => {
  postDB.update()
  .then()
- .catch()
+ .catch(() => {
+
+ })
 })
 
 server.delete('/api/posts/:id', (req, res) => {
  postDB.remove()
  .then()
- .catch()
+ .catch(() => {
+
+ })
 })
 
 server.listen(PORT, () => {
