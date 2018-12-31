@@ -4,6 +4,10 @@ const router = express.Router()
 
 const userDB = require('../data/helpers/userDb')
 
+const middleware = require('../middleware')
+
+const upperCase = middleware.upperCaser
+
 router.get('/', (req, res) => {
  userDB
  .get()
@@ -33,7 +37,7 @@ router.get('/', (req, res) => {
  })
 })
 
-router.post('/', (req, res) => {
+router.post('/', upperCase, (req, res) => {
  const name = req.params.name
  console.log(name)
  userDB.insert(name)
