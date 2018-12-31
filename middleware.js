@@ -1,7 +1,8 @@
 const upperCaser = (req, res, next) => {
- const name = req.body.user
+ const name = req.body.name
  if (name) {
-  req.body.name = name.toUppercase()
+  name = name.toUppercase()
+  req.body.name = name
   next()
  }
  else {

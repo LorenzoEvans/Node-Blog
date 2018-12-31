@@ -44,12 +44,13 @@ server.get('/api/users/:id', (req, res) => {
  })
 })
 
-server.post('/api/users', upperCase, (req, res) => {
- const { name } = req.body
+server.post('/api/users', (req, res) => {
+ const name = req.body
+ console.log(name)
  userDB.insert({ name })
  .then(({ name }) => {
   res
-   .send({ name} )
+   .send({ name: name })
  })
  .catch(() => {
   res
@@ -65,34 +66,53 @@ server.put('/api/users/:id', (req, res) => {
 })
 
 server.delete('/api/users/:id', (req, res) => {
- userDB.remove(user)
- .then()
+ const { id } = req.params
+ userDB.remove(id)
+ .then(() => {
+  res
+   .json({message: "User was removed from database."})
+ })
  .catch(() => {
-
+  res
+   .status(500)
+   .json({error: "Error removing user from database."})
  })
 })
 
 // Posts endpoints 
 server.get('/api/posts', (req, res) => {
  postDB.get()
- .then()
+ .then((posts) => {
+  res
+   .json(posts)
+ })
  .catch(() => {
-
+  res
+   .json({error: "There was an error retrieving posts."})
  })
 })
 
 server.get('/api/posts/:id', (req, res) => {
  const { id } = req.params
  postDB.get(id)
- .then()
+ .then((post) => {
+  res
+   .json(post)
+ })
  .catch(() => {
-
+  res
+   .status(500)
+   .json({error: "There was an error retrieving post from the database."})
  })
 })
 
 server.post('/api/posts', (req, res) => {
- postDB.insert(post)
- .then()
+ const { text } = req.body
+ postDB.insert({ text })
+ .then(() => {
+  res
+   .send()
+ })
  .catch(() => {
 
  })
@@ -107,8 +127,11 @@ server.put('/api/posts/:id', (req, res) => {
 })
 
 server.delete('/api/posts/:id', (req, res) => {
- postDB.remove()
- .then()
+ postDB.remove(id)
+ .then(() => {
+  res
+  .json({message: "Post was removed from the database."})
+ })
  .catch(() => {
 
  })
