@@ -2,7 +2,9 @@ const express = require("express")
 
 const router = express.Router()
 
-router.get('/api/users', (req, res) => {
+const userDB = require('../data/helpers/userDb')
+
+router.get('/', (req, res) => {
  userDB
  .get()
   .then(((users) => {
@@ -16,7 +18,7 @@ router.get('/api/users', (req, res) => {
   })
 })
 
-router.get('/api/users/:id', (req, res) => {
+router.get('/', (req, res) => {
  const { id } = req.params
  userDB.get(id)
  .then((user) => {
@@ -31,7 +33,7 @@ router.get('/api/users/:id', (req, res) => {
  })
 })
 
-router.post('/api/users', upperCase, (req, res) => {
+router.post('/', (req, res) => {
  const name = req.params.name
  console.log(name)
  userDB.insert(name)
@@ -46,13 +48,13 @@ router.post('/api/users', upperCase, (req, res) => {
  })
 })
 
-router.put('/api/users/:id', (req, res) => {
+router.put('/', (req, res) => {
  userDB.update(user)
  .then()
  .catch()
 })
 
-router.delete('/api/users/:id', (req, res) => {
+router.delete('/', (req, res) => {
  const { id } = req.params
  userDB.remove(id)
  .then(() => {

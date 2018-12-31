@@ -4,6 +4,7 @@ const morganLog = require("morgan")
 const PORT = 4090
 const middleware = require('./middleware')
 const userRouter = require('./Routers/userRouters')
+const postRouter = require("./Routers/postRouters")
 const server = express()
 const userDB = require("./data/helpers/userDb")
 const postDB = require("./data/helpers/postDb")
@@ -15,6 +16,8 @@ server.use(
  morganLog('tiny'),
  // upperCaser.upperCaser
 )
+
+server.use('/api/users', userRouter)
 
 server.get('/api/users', (req, res) => {
  userDB

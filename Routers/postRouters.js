@@ -2,9 +2,9 @@ const express = require("express")
 
 const router = express.Router()
 
+const postDB = require('../data/helpers/postDb')
 
-
-server.get('/api/posts', (req, res) => {
+router.get('/', (req, res) => {
  postDB.get()
  .then((posts) => {
   res
@@ -16,7 +16,7 @@ server.get('/api/posts', (req, res) => {
  })
 })
 
-server.get('/api/posts/:id', (req, res) => {
+router.get('/', (req, res) => {
  const { id } = req.params
  postDB.get(id)
  .then((post) => {
@@ -30,7 +30,7 @@ server.get('/api/posts/:id', (req, res) => {
  })
 })
 
-server.post('/api/posts', (req, res) => {
+router.post('/', (req, res) => {
  const { id } = req.params.id
  const { text, userID } = req.body
  userID = req.params.id
@@ -45,7 +45,7 @@ server.post('/api/posts', (req, res) => {
  })
 })
 
-server.put('/api/posts/:id', (req, res) => {
+router.put('/', (req, res) => {
  postDB.update()
  .then()
  .catch(() => {
@@ -53,7 +53,7 @@ server.put('/api/posts/:id', (req, res) => {
  })
 })
 
-server.delete('/api/posts/:id', (req, res) => {
+router.delete('/', (req, res) => {
  postDB.remove(id)
  .then(() => {
   res
@@ -63,3 +63,5 @@ server.delete('/api/posts/:id', (req, res) => {
 
  })
 })
+
+module.exports = router
