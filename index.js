@@ -3,6 +3,7 @@ const helmet = require("helmet")
 const morganLog = require("morgan")
 const PORT = 4090
 const middleware = require('./middleware')
+const userRouter = require('./Routers/userRouters')
 const server = express()
 const userDB = require("./data/helpers/userDb")
 const postDB = require("./data/helpers/postDb")
@@ -44,13 +45,13 @@ server.get('/api/users/:id', (req, res) => {
  })
 })
 
-server.post('/api/users', (req, res) => {
- const name = req.body
+server.post('/api/users', upperCase, (req, res) => {
+ const name = req.params.name
  console.log(name)
- userDB.insert({ name })
- .then(({ name }) => {
+ userDB.insert(name)
+ .then((name) => {
   res
-   .send({ name: name })
+   .send(name)
  })
  .catch(() => {
   res
@@ -107,7 +108,10 @@ server.get('/api/posts/:id', (req, res) => {
 })
 
 server.post('/api/posts', (req, res) => {
- const { text } = req.body
+ const { id } = req.params.id
+ const { text, userID } = req.body
+ userID = req.params.id
+ userDB.get(id)
  postDB.insert({ text })
  .then(() => {
   res
