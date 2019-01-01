@@ -45,15 +45,23 @@ router.post('/', (req, res) => {
  })
 })
 
-router.put('/', (req, res) => {
- postDB.update()
- .then()
- .catch(() => {
-
- })
+router.put('/:id', (req, res) => {
+ const { id } = req.params
+if (id) {
+ postDB
+  .update(id, user)
+  .then(() => {
+   res
+    .send(user)
+  })
+  .catch(() => {
+   res
+    .json({error: "There was an error updating post."})
+  })
+}
 })
 
-router.delete('/', (req, res) => {
+router.delete('/:id', (req, res) => {
  postDB.remove(id)
  .then(() => {
   res

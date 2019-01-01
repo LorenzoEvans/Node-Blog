@@ -86,7 +86,7 @@ router.put('/:id', (req, res) => {
  
 })
 
-router.delete('/', (req, res) => {
+router.delete('/:id', (req, res) => {
  const { id } = req.params
  userDB.remove(id)
  .then(() => {
