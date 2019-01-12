@@ -38,51 +38,39 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
- const usrObj = req.body
- console.log(usrObj)
- if (usrObj.name) {
+ const user = req.body
+ if (user.name) {
  userDB
-  .insert(usrObj)
-  .then(usrId => {
-   console.log(usrId)
-   userDB
-    .get(usrId)
-    .then(usr => {
-     res
-      .status(201)
-      .send(usr)
-      .json(usr)
-    })
-  })
+  .insert(user)
+  .then((user) => {
+   res
+    .status(201)
+    .json(user)
+  })  
   .catch(() => {
    res
     .status(500)
     .json({error: "There was an error adding user to Database."})
   })
  }
- else {
-  res
-   .status(400)
-   .json({message: "A name is required to add user to Database."})
- }
 })
 
 router.put('/:id', (req, res) => {
  const { id } = req.params
- const { name } = req.body.user
- if (user.name){
+ const user = req.body
+ // if (user.name){
   userDB
-  .update(name)
-  .then(name => {
+  .update(id, user)
+  .then(user => {
    res
-    .send(name)
+    .send(user)
   })
   .catch(() => {
    res
     .status(500)
     .json({message: "Error editing user."})
   })
- }
+ // }
  
 })
 
