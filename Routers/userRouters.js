@@ -37,11 +37,12 @@ router.get('/:id', (req, res) => {
  })
 })
 
-router.post('/', (req, res) => {
- const user = req.body
- if (user.name) {
+router.post('/', upperCase, (req, res) => {
+ const { name } = req.body
+ console.log(req.body)
+ if ({name}) {
  userDB
-  .insert(user)
+  .insert({name})
   .then((user) => {
    res
     .status(201)
@@ -55,10 +56,9 @@ router.post('/', (req, res) => {
  }
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', upperCase, (req, res) => {
  const { id } = req.params
  const user = req.body
- // if (user.name){
   userDB
   .update(id, user)
   .then(user => {
@@ -70,8 +70,6 @@ router.put('/:id', (req, res) => {
     .status(500)
     .json({message: "Error editing user."})
   })
- // }
- 
 })
 
 router.delete('/:id', (req, res) => {
